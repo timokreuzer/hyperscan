@@ -1051,7 +1051,7 @@ template<class implNFA_t>
 static
 void findStateSize(const build_info &args, implNFA_t *limex) {
     // Nothing is masked off by default.
-    maskFill(limex->compressMask, 0xff);
+    maskFill(limex->compressMask, (char)0xff);
 
     u32 sizeUncompressed = uncompressedStateSize(args.num_states);
     assert(sizeUncompressed <= sizeof(limex->compressMask));
