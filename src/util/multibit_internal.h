@@ -64,7 +64,11 @@ struct mmbit_sparse_iter {
  * to store the current iteration state.
  */
 struct mmbit_sparse_state {
+#ifdef _MSC_VER // This is required, since alignment for u64a is deliberately turned off
+    __declspec(align(8)) MMB_TYPE mask; //!< \brief masked last block read at this level.
+#else
     MMB_TYPE mask; //!< \brief masked last block read at this level.
+#endif
     u32 itkey;     //!< \brief iterator offset for this level.
 };
 
