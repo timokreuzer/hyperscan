@@ -185,7 +185,7 @@ void loadcompressed128(m128 *x, const void *ptr, const m128 *m,
 
 #if defined(ARCH_32_BIT)
 static really_inline
-void storecompressed256_32bit(void *ptr, m256 xvec, m256 mvec) {
+void __vectorcall storecompressed256_32bit(void *ptr, m256 xvec, m256 mvec) {
     // First, decompose our vectors into 32-bit chunks.
     u32 x[8];
     memcpy(x, &xvec, sizeof(xvec));
@@ -244,7 +244,7 @@ void storecompressed256(void *ptr, const m256 *x, const m256 *m,
 
 #if defined(ARCH_32_BIT)
 static really_inline
-m256 loadcompressed256_32bit(const void *ptr, m256 mvec) {
+m256 __vectorcall loadcompressed256_32bit(const void *ptr, m256 mvec) {
     // First, decompose our vectors into 32-bit chunks.
     u32 m[8];
     memcpy(m, &mvec, sizeof(mvec));
@@ -314,7 +314,7 @@ void loadcompressed256(m256 *x, const void *ptr, const m256 *m,
 
 #if defined(ARCH_32_BIT)
 static really_inline
-void storecompressed384_32bit(void *ptr, m384 xvec, m384 mvec) {
+void __vectorcall storecompressed384_32bit(void *ptr, m384 xvec, m384 mvec) {
     // First, decompose our vectors into 32-bit chunks.
     u32 x[12];
     memcpy(x, &xvec, sizeof(xvec));
@@ -379,7 +379,7 @@ void storecompressed384(void *ptr, const m384 *x, const m384 *m,
 
 #if defined(ARCH_32_BIT)
 static really_inline
-m384 loadcompressed384_32bit(const void *ptr, m384 mvec) {
+m384 __vectorcall loadcompressed384_32bit(const void *ptr, m384 mvec) {
     // First, decompose our vectors into 32-bit chunks.
     u32 m[12];
     memcpy(m, &mvec, sizeof(mvec));
@@ -448,7 +448,7 @@ void loadcompressed384(m384 *x, const void *ptr, const m384 *m,
 
 #if defined(ARCH_32_BIT)
 static really_inline
-void storecompressed512_32bit(void *ptr, m512 xvec, m512 mvec) {
+void __vectorcall storecompressed512_32bit(void *ptr, m512 xvec, m512 mvec) {
     // First, decompose our vectors into 32-bit chunks.
     u32 x[16];
     memcpy(x, &xvec, sizeof(xvec));
@@ -519,7 +519,7 @@ void storecompressed512(void *ptr, const m512 *x, const m512 *m,
 
 #if defined(ARCH_32_BIT)
 static really_inline
-m512 loadcompressed512_32bit(const void *ptr, m512 mvec) {
+m512 __vectorcall loadcompressed512_32bit(const void *ptr, m512 mvec) {
     // First, decompose our vectors into 32-bit chunks.
     u32 m[16];
     memcpy(m, &mvec, sizeof(mvec));

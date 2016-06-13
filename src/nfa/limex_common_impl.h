@@ -253,12 +253,12 @@ STATE_T INITIAL_FN(const IMPL_NFA_T *impl, char onlyDs) {
 }
 
 static really_inline
-STATE_T TOP_FN(const IMPL_NFA_T *impl, char onlyDs, STATE_T state) {
+STATE_T __vectorcall TOP_FN(const IMPL_NFA_T *impl, char onlyDs, STATE_T state) {
     return OR_STATE(INITIAL_FN(impl, onlyDs), state);
 }
 
 static really_inline
-STATE_T TOPN_FN(const IMPL_NFA_T *limex, STATE_T state, u32 n) {
+STATE_T __vectorcall TOPN_FN(const IMPL_NFA_T *limex, STATE_T state, u32 n) {
     assert(n < limex->topCount);
     const STATE_T *topsptr =
         (const STATE_T *)((const char *)limex + limex->topOffset);
@@ -333,7 +333,7 @@ void EXPIRE_ESTATE_FN(const IMPL_NFA_T *limex, struct CONTEXT_T *ctx,
 // Specialised inAccept call: LimEx NFAs with the "lazy tug" optimisation (see
 // UE-1636) need to guard cyclic tug-accepts as well.
 static really_inline
-char LIMEX_INACCEPT_FN(const IMPL_NFA_T *limex, STATE_T state,
+char __vectorcall LIMEX_INACCEPT_FN(const IMPL_NFA_T *limex, STATE_T state,
                        union RepeatControl *repeat_ctrl, char *repeat_state,
                        u64a offset, ReportID report) {
     assert(limex);

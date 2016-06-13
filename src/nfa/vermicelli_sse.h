@@ -175,7 +175,7 @@ const u8 *dvermSearchAlignedNocase(m128 chars1, m128 chars2, u8 c1, u8 c2,
 }
 
 static really_inline
-const u8 *dvermSearchAlignedMasked(m128 chars1, m128 chars2,
+const u8 * __vectorcall dvermSearchAlignedMasked(m128 chars1, m128 chars2,
                                    m128 mask1, m128 mask2, u8 c1, u8 c2, u8 m1,
                                    u8 m2, const u8 *buf, const u8 *buf_end) {
     assert((size_t)buf % 16 == 0);
@@ -231,7 +231,7 @@ const u8 *dvermPreconditionNocase(m128 chars1, m128 chars2, const u8 *buf) {
 
 // returns NULL if not found
 static really_inline
-const u8 *dvermPreconditionMasked(m128 chars1, m128 chars2,
+const u8 * __vectorcall dvermPreconditionMasked(m128 chars1, m128 chars2,
                                   m128 mask1, m128 mask2, const u8 *buf) {
     m128 data = loadu128(buf); // unaligned
     u32 z = movemask128(and128(eq128(chars1, and128(data, mask1)),

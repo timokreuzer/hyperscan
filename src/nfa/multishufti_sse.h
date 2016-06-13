@@ -36,7 +36,7 @@
 /* Normal SSSE3 shufti */
 
 static really_inline
-const u8 *JOIN(MATCH_ALGO, fwdBlock)(m128 mask_lo, m128 mask_hi, m128 chars,
+const u8 * _vectorcall JOIN(MATCH_ALGO, fwdBlock)(m128 mask_lo, m128 mask_hi, m128 chars,
                                      const u8 *buf, const m128 low4bits,
                                      const m128 zeroes, const u8 run_len
 #ifdef MULTIACCEL_DOUBLE
@@ -56,7 +56,7 @@ const u8 *JOIN(MATCH_ALGO, fwdBlock)(m128 mask_lo, m128 mask_hi, m128 chars,
  * 16-byte pipeline, for smaller scans
  */
 static
-const u8 *JOIN(MATCH_ALGO, shuftiPipeline16)(m128 mask_lo, m128 mask_hi,
+const u8 * _vectorcall JOIN(MATCH_ALGO, shuftiPipeline16)(m128 mask_lo, m128 mask_hi,
                                              const u8 *buf, const u8 *buf_end,
                                              const m128 low4bits,
                                              const m128 zeroes, const u8 run_len
@@ -114,7 +114,7 @@ const u8 *JOIN(MATCH_ALGO, shuftiPipeline16)(m128 mask_lo, m128 mask_hi,
  * 32-byte pipeline, for bigger scans
  */
 static
-const u8 *JOIN(MATCH_ALGO, shuftiPipeline32)(m128 mask_lo, m128 mask_hi,
+const u8 * _vectorcall JOIN(MATCH_ALGO, shuftiPipeline32)(m128 mask_lo, m128 mask_hi,
                                              const u8 *buf, const u8 *buf_end,
                                              const m128 low4bits,
                                              const m128 zeroes, const u8 run_len
@@ -190,7 +190,7 @@ const u8 *JOIN(MATCH_ALGO, shuftiPipeline32)(m128 mask_lo, m128 mask_hi,
     return NULL;
 }
 
-const u8 *JOIN(MATCH_ALGO, shuftiExec)(m128 mask_lo, m128 mask_hi,
+const u8 * _vectorcall JOIN(MATCH_ALGO, shuftiExec)(m128 mask_lo, m128 mask_hi,
                                        const u8 *buf,
                                        const u8 *buf_end, u8 run_len
 #ifdef MULTIACCEL_DOUBLE

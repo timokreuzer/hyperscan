@@ -72,7 +72,7 @@ const u8 *firstMatch(const u8 *buf, u32 z) {
 }
 
 static really_inline
-const u8 *fwdBlock(m128 mask_lo, m128 mask_hi, m128 chars, const u8 *buf,
+const u8 *__vectorcall fwdBlock(m128 mask_lo, m128 mask_hi, m128 chars, const u8 *buf,
                    const m128 low4bits, const m128 zeroes) {
     u32 z = block(mask_lo, mask_hi, chars, low4bits, zeroes);
 
@@ -149,7 +149,7 @@ const u8 *lastMatch(const u8 *buf, m128 t, m128 compare) {
 
 
 static really_inline
-const u8 *revBlock(m128 mask_lo, m128 mask_hi, m128 chars, const u8 *buf,
+const u8 *__vectorcall revBlock(m128 mask_lo, m128 mask_hi, m128 chars, const u8 *buf,
                    const m128 low4bits, const m128 zeroes) {
     m128 c_lo  = pshufb(mask_lo, GET_LO_4(chars));
     m128 c_hi  = pshufb(mask_hi, GET_HI_4(chars));
@@ -216,7 +216,7 @@ const u8 *rshuftiExec(m128 mask_lo, m128 mask_hi, const u8 *buf,
 }
 
 static really_inline
-const u8 *fwdBlock2(m128 mask1_lo, m128 mask1_hi, m128 mask2_lo, m128 mask2_hi,
+const u8 *__vectorcall fwdBlock2(m128 mask1_lo, m128 mask1_hi, m128 mask2_lo, m128 mask2_hi,
                     m128 chars, const u8 *buf, const m128 low4bits,
                     const m128 ones) {
     m128 chars_lo = GET_LO_4(chars);
@@ -247,7 +247,7 @@ const u8 *fwdBlock2(m128 mask1_lo, m128 mask1_hi, m128 mask2_lo, m128 mask2_hi,
     return firstMatch(buf, z);
 }
 
-const u8 *shuftiDoubleExec(m128 mask1_lo, m128 mask1_hi,
+const u8 *__vectorcall shuftiDoubleExec(m128 mask1_lo, m128 mask1_hi,
                            m128 mask2_lo, m128 mask2_hi,
                            const u8 *buf, const u8 *buf_end) {
     const m128 ones = ones128();
@@ -485,7 +485,7 @@ const u8 *fwdBlock2(m256 mask1_lo, m256 mask1_hi, m256 mask2_lo, m256 mask2_hi,
 }
 
 /* takes 128 bit masks, but operates on 256 bits of data */
-const u8 *shuftiDoubleExec(m128 mask1_lo, m128 mask1_hi,
+const u8 * __vectorcall shuftiDoubleExec(m128 mask1_lo, m128 mask1_hi,
                            m128 mask2_lo, m128 mask2_hi,
                            const u8 *buf, const u8 *buf_end) {
     if (buf_end - buf < 32) {

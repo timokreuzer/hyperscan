@@ -50,7 +50,7 @@ const u8 *shuftiExec(m128 mask_lo, m128 mask_hi, const u8 *buf,
 const u8 *rshuftiExec(m128 mask_lo, m128 mask_hi, const u8 *buf,
                       const u8 *buf_end);
 
-const u8 *shuftiDoubleExec(m128 mask1_lo, m128 mask1_hi,
+const u8 *__vectorcall shuftiDoubleExec(m128 mask1_lo, m128 mask1_hi,
                            m128 mask2_lo, m128 mask2_hi,
                            const u8 *buf, const u8 *buf_end);
 

@@ -347,7 +347,7 @@ m256 set2x128(m128 a) {
 #else
 
 static really_inline
-m256 shift4x64(m256 a, int b) {
+m256 __vectorcall shift4x64(m256 a, int b) {
     m256 rv = a;
     rv.lo = shift2x64(rv.lo, b);
     rv.hi = shift2x64(rv.hi, b);
@@ -355,14 +355,14 @@ m256 shift4x64(m256 a, int b) {
 }
 
 static really_inline
-m256 rshift4x64(m256 a, int b) {
+m256 __vectorcall rshift4x64(m256 a, int b) {
     m256 rv = a;
     rv.lo = rshift2x64(rv.lo, b);
     rv.hi = rshift2x64(rv.hi, b);
     return rv;
 }
 static really_inline
-m256 set32x8(u32 in) {
+m256 __vectorcall set32x8(u32 in) {
     m256 rv;
     rv.lo = set16x8((u8) in);
     rv.hi = rv.lo;
@@ -406,7 +406,7 @@ static really_inline m256 and256(m256 a, m256 b) {
     rv_and256;                                                          \
 })
 #else
-static really_inline m256 and256(m256 a, m256 b) {
+static really_inline m256 __vectorcall and256(m256 a, m256 b) {
     m256 rv;
     rv.lo = and128(a.lo, b.lo);
     rv.hi = and128(a.hi, b.hi);
@@ -426,7 +426,7 @@ static really_inline m256 or256(m256 a, m256 b) {
     rv_or256;                                                           \
 })
 #else
-static really_inline m256 or256(m256 a, m256 b) {
+static really_inline m256 __vectorcall or256(m256 a, m256 b) {
     m256 rv;
     rv.lo = or128(a.lo, b.lo);
     rv.hi = or128(a.hi, b.hi);
@@ -446,7 +446,7 @@ static really_inline m256 xor256(m256 a, m256 b) {
     rv_xor256;                                                          \
 })
 #else
-static really_inline m256 xor256(m256 a, m256 b) {
+static really_inline m256 __vectorcall xor256(m256 a, m256 b) {
     m256 rv;
     rv.lo = xor128(a.lo, b.lo);
     rv.hi = xor128(a.hi, b.hi);
@@ -466,7 +466,7 @@ static really_inline m256 not256(m256 a) {
     rv_not256;                                                          \
 })
 #else
-static really_inline m256 not256(m256 a) {
+static really_inline m256 __vectorcall not256(m256 a) {
     m256 rv;
     rv.lo = not128(a.lo);
     rv.hi = not128(a.hi);
@@ -486,7 +486,7 @@ static really_inline m256 andnot256(m256 a, m256 b) {
     rv_andnot256;                                                       \
 })
 #else
-static really_inline m256 andnot256(m256 a, m256 b) {
+static really_inline m256 __vectorcall andnot256(m256 a, m256 b) {
     m256 rv;
     rv.lo = andnot128(a.lo, b.lo);
     rv.hi = andnot128(a.hi, b.hi);
@@ -506,7 +506,7 @@ static really_inline m256 andnot256(m256 a, m256 b) {
     rv_shift256;                                                        \
 })
 #else
-static really_inline m256 shift256(m256 a, unsigned b) {
+static really_inline m256 __vectorcall shift256(m256 a, unsigned b) {
     m256 rv;
     rv.lo = shift128(a.lo, b);
     rv.hi = shift128(a.hi, b);
@@ -514,7 +514,7 @@ static really_inline m256 shift256(m256 a, unsigned b) {
 }
 #endif
 
-static really_inline int diff256(m256 a, m256 b) {
+static really_inline int __vectorcall diff256(m256 a, m256 b) {
 #if defined(__AVX2__)
     return !!(_mm256_movemask_epi8(_mm256_cmpeq_epi8(a, b)) ^ (int)-1);
 #else
@@ -522,7 +522,7 @@ static really_inline int diff256(m256 a, m256 b) {
 #endif
 }
 
-static really_inline int isnonzero256(m256 a) {
+static really_inline int __vectorcall isnonzero256(m256 a) {
 #if defined(__AVX2__)
     return !!diff256(a, zeroes256());
 #else
@@ -534,7 +534,7 @@ static really_inline int isnonzero256(m256 a) {
  * "Rich" version of diff256(). Takes two vectors a and b and returns an 8-bit
  * mask indicating which 32-bit words contain differences.
  */
-static really_inline u32 diffrich256(m256 a, m256 b) {
+static really_inline u32 __vectorcall diffrich256(m256 a, m256 b) {
 #if defined(__AVX2__)
     a = _mm256_cmpeq_epi32(a, b);
     return ~(_mm256_movemask_ps(_mm256_castsi256_ps(a))) & 0xFF;
@@ -551,7 +551,7 @@ static really_inline u32 diffrich256(m256 a, m256 b) {
  * "Rich" version of diff256(), 64-bit variant. Takes two vectors a and b and
  * returns an 8-bit mask indicating which 64-bit words contain differences.
  */
-static really_inline u32 diffrich64_256(m256 a, m256 b) {
+static really_inline u32 __vectorcall diffrich64_256(m256 a, m256 b) {
     u32 d = diffrich256(a, b);
     return (d | (d >> 1)) & 0x55555555;
 }
@@ -581,7 +581,7 @@ static really_inline m256 load2x128(const void *ptr) {
 }
 
 // aligned store
-static really_inline void store256(void *ptr, m256 a) {
+static really_inline void __vectorcall store256(void *ptr, m256 a) {
 #if defined(__AVX2__)
     assert(ISALIGNED_N(ptr, alignof(m256)));
     _mm256_store_si256((m256 *)ptr, a);
@@ -604,7 +604,7 @@ static really_inline m256 loadu256(const void *ptr) {
 
 // packed unaligned store of first N bytes
 static really_inline
-void storebytes256(void *ptr, m256 a, unsigned int n) {
+void __vectorcall storebytes256(void *ptr, m256 a, unsigned int n) {
     assert(n <= sizeof(a));
     memcpy(ptr, &a, n);
 }
@@ -751,7 +751,7 @@ m256 shift256Left8Bits(m256 a) {
     rv_and384;                                                          \
 })
 #else
-static really_inline m384 and384(m384 a, m384 b) {
+static really_inline m384 __vectorcall and384(m384 a, m384 b) {
     m384 rv;
     rv.lo = and128(a.lo, b.lo);
     rv.mid = and128(a.mid, b.mid);
@@ -769,7 +769,7 @@ static really_inline m384 and384(m384 a, m384 b) {
     rv_or384;                                                           \
 })
 #else
-static really_inline m384 or384(m384 a, m384 b) {
+static really_inline m384 __vectorcall or384(m384 a, m384 b) {
     m384 rv;
     rv.lo = or128(a.lo, b.lo);
     rv.mid = or128(a.mid, b.mid);
@@ -787,7 +787,7 @@ static really_inline m384 or384(m384 a, m384 b) {
     rv_xor384;                                                          \
 })
 #else
-static really_inline m384 xor384(m384 a, m384 b) {
+static really_inline m384 __vectorcall xor384(m384 a, m384 b) {
     m384 rv;
     rv.lo = xor128(a.lo, b.lo);
     rv.mid = xor128(a.mid, b.mid);
@@ -805,7 +805,7 @@ static really_inline m384 xor384(m384 a, m384 b) {
     rv_not384;                                                          \
 })
 #else
-static really_inline m384 not384(m384 a) {
+static really_inline m384 __vectorcall not384(m384 a) {
     m384 rv;
     rv.lo = not128(a.lo);
     rv.mid = not128(a.mid);
@@ -823,7 +823,7 @@ static really_inline m384 not384(m384 a) {
     rv_andnot384;                                                       \
 })
 #else
-static really_inline m384 andnot384(m384 a, m384 b) {
+static really_inline m384 __vectorcall andnot384(m384 a, m384 b) {
     m384 rv;
     rv.lo = andnot128(a.lo, b.lo);
     rv.mid = andnot128(a.mid, b.mid);
@@ -843,7 +843,7 @@ static really_inline m384 andnot384(m384 a, m384 b) {
     rv;                                                                 \
 })
 #else
-static really_inline m384 shift384(m384 a, unsigned b) {
+static really_inline m384 __vectorcall shift384(m384 a, unsigned b) {
     m384 rv;
     rv.lo = shift128(a.lo, b);
     rv.mid = shift128(a.mid, b);
@@ -862,11 +862,11 @@ static really_inline m384 ones384(void) {
     return rv;
 }
 
-static really_inline int diff384(m384 a, m384 b) {
+static really_inline int __vectorcall diff384(m384 a, m384 b) {
     return diff128(a.lo, b.lo) || diff128(a.mid, b.mid) || diff128(a.hi, b.hi);
 }
 
-static really_inline int isnonzero384(m384 a) {
+static really_inline int __vectorcall isnonzero384(m384 a) {
     return isnonzero128(or128(or128(a.lo, a.mid), a.hi));
 }
 
@@ -874,7 +874,7 @@ static really_inline int isnonzero384(m384 a) {
  * "Rich" version of diff384(). Takes two vectors a and b and returns a 12-bit
  * mask indicating which 32-bit words contain differences.
  */
-static really_inline u32 diffrich384(m384 a, m384 b) {
+static really_inline u32 __vectorcall diffrich384(m384 a, m384 b) {
     m128 z = zeroes128();
     a.lo = _mm_cmpeq_epi32(a.lo, b.lo);
     a.mid = _mm_cmpeq_epi32(a.mid, b.mid);
@@ -888,7 +888,7 @@ static really_inline u32 diffrich384(m384 a, m384 b) {
  * "Rich" version of diff384(), 64-bit variant. Takes two vectors a and b and
  * returns a 12-bit mask indicating which 64-bit words contain differences.
  */
-static really_inline u32 diffrich64_384(m384 a, m384 b) {
+static really_inline u32 __vectorcall diffrich64_384(m384 a, m384 b) {
     u32 d = diffrich384(a, b);
     return (d | (d >> 1)) & 0x55555555;
 }
@@ -902,7 +902,7 @@ static really_inline m384 load384(const void *ptr) {
 }
 
 // aligned store
-static really_inline void store384(void *ptr, m384 a) {
+static really_inline void __vectorcall store384(void *ptr, m384 a) {
     assert(ISALIGNED_16(ptr));
     ptr = assume_aligned(ptr, 16);
     *(m384 *)ptr = a;
@@ -917,7 +917,7 @@ static really_inline m384 loadu384(const void *ptr) {
 
 // packed unaligned store of first N bytes
 static really_inline
-void storebytes384(void *ptr, m384 a, unsigned int n) {
+void __vectorcall storebytes384(void *ptr, m384 a, unsigned int n) {
     assert(n <= sizeof(a));
     memcpy(ptr, &a, n);
 }
@@ -988,7 +988,7 @@ char testbit384(const m384 *ptr, unsigned int n) {
     rv_and512;                                                          \
 })
 #else
-static really_inline m512 and512(m512 a, m512 b) {
+static really_inline m512 __vectorcall and512(m512 a, m512 b) {
     m512 rv;
     rv.lo = and256(a.lo, b.lo);
     rv.hi = and256(a.hi, b.hi);
@@ -1004,7 +1004,7 @@ static really_inline m512 and512(m512 a, m512 b) {
     rv_or512;                                                           \
 })
 #else
-static really_inline m512 or512(m512 a, m512 b) {
+static really_inline m512 __vectorcall or512(m512 a, m512 b) {
     m512 rv;
     rv.lo = or256(a.lo, b.lo);
     rv.hi = or256(a.hi, b.hi);
@@ -1020,7 +1020,7 @@ static really_inline m512 or512(m512 a, m512 b) {
     rv_xor512;                                                          \
 })
 #else
-static really_inline m512 xor512(m512 a, m512 b) {
+static really_inline m512 __vectorcall xor512(m512 a, m512 b) {
     m512 rv;
     rv.lo = xor256(a.lo, b.lo);
     rv.hi = xor256(a.hi, b.hi);
@@ -1036,7 +1036,7 @@ static really_inline m512 xor512(m512 a, m512 b) {
     rv_not512;                                                          \
 })
 #else
-static really_inline m512 not512(m512 a) {
+static really_inline m512 __vectorcall not512(m512 a) {
     m512 rv;
     rv.lo = not256(a.lo);
     rv.hi = not256(a.hi);
@@ -1052,7 +1052,7 @@ static really_inline m512 not512(m512 a) {
     rv_andnot512;                                                       \
 })
 #else
-static really_inline m512 andnot512(m512 a, m512 b) {
+static really_inline m512 __vectorcall andnot512(m512 a, m512 b) {
     m512 rv;
     rv.lo = andnot256(a.lo, b.lo);
     rv.hi = andnot256(a.hi, b.hi);
@@ -1070,7 +1070,7 @@ static really_inline m512 andnot512(m512 a, m512 b) {
     rv_shift512;                                                        \
 })
 #else
-static really_inline m512 shift512(m512 a, unsigned b) {
+static really_inline m512 __vectorcall shift512(m512 a, unsigned b) {
     m512 rv;
     rv.lo = shift256(a.lo, b);
     rv.hi = shift256(a.hi, b);
@@ -1088,11 +1088,11 @@ static really_inline m512 ones512(void) {
     return rv;
 }
 
-static really_inline int diff512(m512 a, m512 b) {
+static really_inline int __vectorcall diff512(m512 a, m512 b) {
     return diff256(a.lo, b.lo) || diff256(a.hi, b.hi);
 }
 
-static really_inline int isnonzero512(m512 a) {
+static really_inline int __vectorcall isnonzero512(m512 a) {
 #if !defined(__AVX2__)
     m128 x = or128(a.lo.lo, a.lo.hi);
     m128 y = or128(a.hi.lo, a.hi.hi);
@@ -1107,7 +1107,7 @@ static really_inline int isnonzero512(m512 a) {
  * "Rich" version of diff512(). Takes two vectors a and b and returns a 16-bit
  * mask indicating which 32-bit words contain differences.
  */
-static really_inline u32 diffrich512(m512 a, m512 b) {
+static really_inline u32 __vectorcall diffrich512(m512 a, m512 b) {
 #if defined(__AVX2__)
     return diffrich256(a.lo, b.lo) | (diffrich256(a.hi, b.hi) << 8);
 #else
@@ -1125,7 +1125,7 @@ static really_inline u32 diffrich512(m512 a, m512 b) {
  * "Rich" version of diffrich(), 64-bit variant. Takes two vectors a and b and
  * returns a 16-bit mask indicating which 64-bit words contain differences.
  */
-static really_inline u32 diffrich64_512(m512 a, m512 b) {
+static really_inline u32 __vectorcall diffrich64_512(m512 a, m512 b) {
     u32 d = diffrich512(a, b);
     return (d | (d >> 1)) & 0x55555555;
 }
@@ -1138,7 +1138,7 @@ static really_inline m512 load512(const void *ptr) {
 }
 
 // aligned store
-static really_inline void store512(void *ptr, m512 a) {
+static really_inline void __vectorcall store512(void *ptr, m512 a) {
 #if defined(__AVX2__)
     m512 *x = (m512 *)ptr;
     store256(&x->lo, a.lo);
@@ -1158,7 +1158,7 @@ static really_inline m512 loadu512(const void *ptr) {
 
 // packed unaligned store of first N bytes
 static really_inline
-void storebytes512(void *ptr, m512 a, unsigned int n) {
+void __vectorcall storebytes512(void *ptr, m512 a, unsigned int n) {
     assert(n <= sizeof(a));
     memcpy(ptr, &a, n);
 }

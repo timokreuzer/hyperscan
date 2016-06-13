@@ -103,7 +103,7 @@
 // Run exception processing, if necessary. Returns 0 if scanning should
 // continue, 1 if an accept was fired and the user instructed us to halt.
 static really_inline
-char RUN_EXCEPTIONS_FN(const IMPL_NFA_T *limex, const EXCEPTION_T *exceptions,
+char __vectorcall RUN_EXCEPTIONS_FN(const IMPL_NFA_T *limex, const EXCEPTION_T *exceptions,
                        const ReportID *exReports, const u32 *exceptionMap,
                        STATE_T s, const STATE_T emask, size_t i, u64a offset,
                        STATE_T *succ, u64a *final_loc, struct CONTEXT_T *ctx,
@@ -142,7 +142,7 @@ char RUN_EXCEPTIONS_FN(const IMPL_NFA_T *limex, const EXCEPTION_T *exceptions,
 }
 
 static really_inline
-size_t RUN_ACCEL_FN(const STATE_T s, UNUSED const STATE_T accelMask,
+size_t __vectorcall RUN_ACCEL_FN(const STATE_T s, UNUSED const STATE_T accelMask,
                     UNUSED const IMPL_NFA_T *limex, const u8 *accelTable,
                     const union AccelAux *accelAux, const u8 *input, size_t i,
                     size_t length) {

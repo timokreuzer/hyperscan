@@ -97,7 +97,7 @@ DUMP_MSK(128)
 #define GET_HI_4(chars) rshift2x64(andnot128(low4bits, chars), 4)
 
 static really_inline
-u32 block(m128 mask_lo, m128 mask_hi, m128 chars, const m128 low4bits,
+u32 __vectorcall block(m128 mask_lo, m128 mask_hi, m128 chars, const m128 low4bits,
           const m128 compare) {
     m128 c_lo  = pshufb(mask_lo, GET_LO_4(chars));
     m128 c_hi  = pshufb(mask_hi, GET_HI_4(chars));

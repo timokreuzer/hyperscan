@@ -43,25 +43,25 @@ extern "C"
 {
 #endif
 
-const u8 *long_shuftiExec(m128 mask_lo, m128 mask_hi, const u8 *buf,
-                          const u8 *buf_end, const u8 run_len);
+const u8 * _vectorcall long_shuftiExec(m128 mask_lo, m128 mask_hi, const u8 *buf,
+                          const u8 *buf_end, u8 run_len);
 
-const u8 *longgrab_shuftiExec(m128 mask_lo, m128 mask_hi, const u8 *buf,
-                              const u8 *buf_end, const u8 run_len);
+const u8 * _vectorcall longgrab_shuftiExec(m128 mask_lo, m128 mask_hi, const u8 *buf,
+                              const u8 *buf_end, u8 run_len);
 
-const u8 *shift_shuftiExec(m128 mask_lo, m128 mask_hi, const u8 *buf,
-                           const u8 *buf_end, const u8 run_len);
+const u8 * _vectorcall shift_shuftiExec(m128 mask_lo, m128 mask_hi, const u8 *buf,
+                           const u8 *buf_end, u8 run_len);
 
-const u8 *shiftgrab_shuftiExec(m128 mask_lo, m128 mask_hi, const u8 *buf,
-                               const u8 *buf_end, const u8 run_len);
+const u8 * _vectorcall shiftgrab_shuftiExec(m128 mask_lo, m128 mask_hi, const u8 *buf,
+                               const u8 *buf_end, u8 run_len);
 
-const u8 *doubleshift_shuftiExec(m128 mask_lo, m128 mask_hi, const u8 *buf,
-                                 const u8 *buf_end, const u8 run_len,
-                                 const u8 run2_len);
+const u8 * _vectorcall doubleshift_shuftiExec(m128 mask_lo, m128 mask_hi, const u8 *buf,
+                                 const u8 *buf_end, u8 run_len,
+                                 u8 run2_len);
 
-const u8 *doubleshiftgrab_shuftiExec(m128 mask_lo, m128 mask_hi, const u8 *buf,
-                                     const u8 *buf_end, const u8 run_len,
-                                     const u8 run2_len);
+const u8 * _vectorcall doubleshiftgrab_shuftiExec(m128 mask_lo, m128 mask_hi, const u8 *buf,
+                                     const u8 *buf_end, u8 run_len,
+                                     u8 run2_len);
 
 #ifdef __cplusplus
 }

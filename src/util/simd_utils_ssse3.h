@@ -111,7 +111,7 @@ m256 vpshufb(m256 a, m256 b) {
 #else // not __AVX2__
 
 static really_inline
-m256 vpshufb(m256 a, m256 b) {
+m256 __vectorcall vpshufb(m256 a, m256 b) {
     m256 rv;
     rv.lo = pshufb(a.lo, b.lo);
     rv.hi = pshufb(a.hi, b.hi);
@@ -134,7 +134,7 @@ m256 vpshufb(m256 a, m256 b) {
 		res.hi = palignr(r.hi, l.hi, N); \
 		return res;
 static really_inline
-m256 vpalignr(m256 r, m256 l, const int offset) {
+m256 __vectorcall vpalignr(m256 r, m256 l, const int offset) {
 	m256 res;
 	switch (offset) {
 	VPALIGN_CASE(0)
