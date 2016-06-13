@@ -34,7 +34,7 @@
 /* masks for masked moves */
 
 /* magic mask for maskload (vmmaskmovq) - described in UE-2424 */
-const u32 mm_mask_mask[16] ALIGN_CL_DIRECTIVE = {
+const u32 ALIGN_CL_DIRECTIVE mm_mask_mask[16] = {
     0x00000000U,
     0x00000000U,
     0x00000000U,
