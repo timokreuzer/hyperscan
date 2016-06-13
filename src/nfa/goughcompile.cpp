@@ -1079,7 +1079,7 @@ aligned_unique_ptr<NFA> goughCompile(raw_som_dfa &raw, u8 somPrecision,
 
     u8 alphaShift
         = ((const mcclellan *)getImplNfa(basic_dfa.get()))->alphaShift;
-    u32 edge_count = (1U << alphaShift) * raw.states.size();
+    u32 edge_count = ((size_t)1U << alphaShift) * raw.states.size();
 
     u32 curr_offset = ROUNDUP_N(basic_dfa->length, 4);
 

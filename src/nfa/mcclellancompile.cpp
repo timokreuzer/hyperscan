@@ -594,7 +594,7 @@ aligned_unique_ptr<NFA> mcclellanCompile16(dfa_info &info,
     map<dstate_id_t, AccelScheme> accel_escape_info
         = populateAccelerationInfo(info.raw, info.strat, cc.grey);
 
-    size_t tran_size = (1 << info.getAlphaShift())
+    size_t tran_size = ((size_t)1 << info.getAlphaShift())
         * sizeof(u16) * count_real_states;
 
     size_t aux_size = sizeof(mstate_aux) * info.size();
@@ -813,7 +813,7 @@ aligned_unique_ptr<NFA> mcclellanCompile8(dfa_info &info,
     map<dstate_id_t, AccelScheme> accel_escape_info
         = populateAccelerationInfo(info.raw, info.strat, cc.grey);
 
-    size_t tran_size = sizeof(u8) * (1 << info.getAlphaShift()) * info.size();
+    size_t tran_size = sizeof(u8) * ((size_t)1 << info.getAlphaShift()) * info.size();
     size_t aux_size = sizeof(mstate_aux) * info.size();
     size_t aux_offset = ROUNDUP_16(sizeof(NFA) + sizeof(mcclellan) + tran_size);
     size_t accel_size = info.strat.accelSize() * accel_escape_info.size();

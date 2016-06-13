@@ -120,8 +120,8 @@ bool buildDvermMask(const flat_set<pair<u8, u8>> &escape_set, u8 *m1_out,
     DEBUG_PRINTF("mask %0hhx %0hhx\n", m1, m2);
 
     assert(holes1 <= 8 && holes2 <= 8);
-    assert(escape_set.size() <= 1U << (holes1 + holes2));
-    if (escape_set.size() != 1U << (holes1 + holes2)) {
+    assert(escape_set.size() <= (size_t)1U << (holes1 + holes2));
+    if (escape_set.size() != (size_t)1U << (holes1 + holes2)) {
         return false;
     }
 

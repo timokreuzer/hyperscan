@@ -190,7 +190,7 @@ TEST_P(FDRFloodp, NoMask) {
         ASSERT_EQ(0, fdrStatus);
 
         for (u8 i = 0; i < 6 ; i++) {
-            u32 cnt = dataSize - (1 << i) + 1;
+            u32 cnt = dataSize - ((size_t)1 << i) + 1;
             ASSERT_EQ(cnt, matchesCounts[i * 8 + 0]);
             ASSERT_EQ(0, matchesCounts[i * 8 + 1]);
             ASSERT_EQ(0, matchesCounts[i * 8 + 3]);
@@ -215,7 +215,7 @@ TEST_P(FDRFloodp, NoMask) {
         ASSERT_EQ(0, fdrStatus);
 
         for (u8 i = 0; i < 6 ; i++) {
-            u32 cnt = dataSize - (1 << i) + 1;
+            u32 cnt = dataSize - ((size_t)1 << i) + 1;
             ASSERT_EQ(0, matchesCounts[i * 8 + 0]);
             ASSERT_EQ(i == 0 ? cnt : 0, matchesCounts[i * 8 + 1]);
             ASSERT_EQ(i == 0 ? cnt : 0, matchesCounts[i * 8 + 3]);

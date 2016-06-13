@@ -272,7 +272,7 @@ size_t getFDRConfirm(const vector<hwlmLiteral> &lits, FDRConfirm **fdrc_p,
     }
 #endif
 
-    const size_t bitsToLitIndexSize = (1U << nBits) * sizeof(u32);
+    const size_t bitsToLitIndexSize = ((size_t)1U << nBits) * sizeof(u32);
     const size_t totalLitSize = thresholdedSize(lits, sizeof(CONF_TYPE));
 
     // this size can now be a worst-case as we can always be a bit smaller
