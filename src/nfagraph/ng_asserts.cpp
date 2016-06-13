@@ -405,12 +405,12 @@ void resolveEdges(ReportManager &rm, NGWrapper &g, set<NFAEdge> *dead) {
 
             flags = g[e].assert_flags;
             if (u_w) {
-                v_w |= flags & POS_FLAG_ASSERT_WORD_TO_WORD_UCP;
-                v_nw |= flags & POS_FLAG_ASSERT_WORD_TO_NONWORD_UCP;
+                v_w |= ((flags & POS_FLAG_ASSERT_WORD_TO_WORD_UCP) != 0);
+                v_nw |= ((flags & POS_FLAG_ASSERT_WORD_TO_NONWORD_UCP) != 0);
             }
             if (u_nw) {
-                v_w |= flags & POS_FLAG_ASSERT_NONWORD_TO_WORD_UCP;
-                v_nw |= flags & POS_FLAG_ASSERT_NONWORD_TO_NONWORD_UCP;
+                v_w |= ((flags & POS_FLAG_ASSERT_NONWORD_TO_WORD_UCP) != 0);
+                v_nw |= ((flags & POS_FLAG_ASSERT_NONWORD_TO_NONWORD_UCP) != 0);
             }
             assert(v_w || v_nw);
             if (v_w && v_nw) {

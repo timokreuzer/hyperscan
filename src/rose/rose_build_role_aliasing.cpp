@@ -717,8 +717,8 @@ void pruneReportIfUnused(const RoseBuildImpl &tbi, shared_ptr<NGHolder> h,
         // unimplementable.
 
         DEBUG_PRINTF("report %u has been merged away, pruning\n", report);
-        assert(h->kind == tbi.isRootSuccessor(*verts.begin()) ? NFA_PREFIX
-                                                              : NFA_INFIX);
+        assert(h->kind == (tbi.isRootSuccessor(*verts.begin()) ? NFA_PREFIX
+                                                              : NFA_INFIX));
         unique_ptr<NGHolder> h_new = cloneHolder(*h);
         pruneReport(*h_new, report);
 

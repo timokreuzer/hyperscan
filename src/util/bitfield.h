@@ -127,7 +127,7 @@ public:
     /// Test bit N.
     bool test(size_t n) const {
         assert(n < size());
-        return bits[getword(n)] & maskbit(n);
+        return ((bits[getword(n)] & maskbit(n)) != 0);
     }
 
     /// Flip bit N.
