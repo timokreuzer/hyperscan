@@ -272,7 +272,7 @@ TEST(scratch, damagedScratch) {
     size_t scratch_size = 0;
     err = hs_scratch_size(scratch, &scratch_size);
     ASSERT_EQ(HS_SUCCESS, err);
-    ASSERT_LT(4, scratch_size);
+    ASSERT_LT(4U, scratch_size);
 
     // Take a temp copy and then scribble over the first four bytes.
     char tmp[4];

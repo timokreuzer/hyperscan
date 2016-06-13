@@ -74,7 +74,7 @@ public:
         if (mode & HS_MODE_STREAM) {
             ASSERT_EQ(HS_SUCCESS, err);
             ASSERT_LT(0U, stream_size);
-            ASSERT_GT(100000, stream_size); /* more than 100k of stream size
+            ASSERT_GT(100000U, stream_size); /* more than 100k of stream size
                                              * and we are probably returning
                                              * rubbish. */
         } else {

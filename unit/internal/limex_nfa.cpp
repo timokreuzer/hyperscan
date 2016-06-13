@@ -143,8 +143,8 @@ TEST_P(LimExModelTest, StateSize) {
     // About all we can say is that any NFA should require at least one byte of
     // state space.
 
-    EXPECT_LT(0, nfa->scratchStateSize);
-    EXPECT_LT(0, nfa->streamStateSize);
+    EXPECT_LT(0U, nfa->scratchStateSize);
+    EXPECT_LT(0U, nfa->streamStateSize);
 }
 
 TEST_P(LimExModelTest, QueueExec) {
