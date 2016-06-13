@@ -405,10 +405,10 @@ TYPED_TEST(SimdUtilsTest, clearbit) {
     for (unsigned int i = 0; i < total_bits; i++) {
         TypeParam a = simd_ones();
         simd_clearbit(&a, i);
-        ASSERT_NE(0, simd_diff(a, ones)) << "bit " << i << " wasn't cleared";
+        ASSERT_NE(false, simd_diff(a, ones)) << "bit " << i << " wasn't cleared";
 
         TypeParam mask = setbit<TypeParam>(i);
-        ASSERT_EQ(0, simd_diff(ones, simd_or(a, mask)))
+        ASSERT_EQ(false, simd_diff(ones, simd_or(a, mask)))
             << "clearing bit " << i << " caused collateral damage";
     }
 }
@@ -420,14 +420,14 @@ TYPED_TEST(SimdUtilsTest, testbit) {
 
     // First, all bits are on in 'ones'.
     for (unsigned int i = 0; i < total_bits; i++) {
-        ASSERT_EQ(1, simd_testbit(&ones, i)) << "bit " << i << " is on";
+        ASSERT_EQ(true, simd_testbit(&ones, i)) << "bit " << i << " is on";
     }
 
     // Try individual bits; only 'i' should be on.
     for (unsigned int i = 0; i < total_bits; i++) {
         TypeParam a = setbit<TypeParam>(i);
         for (unsigned int j = 0; j < total_bits; j++) {
-            ASSERT_EQ(i == j ? 1 : 0, simd_testbit(&a, j)) << "bit " << i
+            ASSERT_EQ(i == j, simd_testbit(&a, j)) << "bit " << i
                                                            << " is wrong";
         }
     }
@@ -471,7 +471,7 @@ TYPED_TEST(SimdUtilsTest, diffrich) {
 
     // and nothing is on in zeroes
     for (unsigned int i = 0; i < total_bits; i++) {
-        ASSERT_EQ(0, simd_testbit(&zeroes, i)) << "bit " << i << " is off";
+        ASSERT_EQ(false, simd_testbit(&zeroes, i)) << "bit " << i << " is off";
     }
 
     // All-zeroes and all-ones differ in all words
@@ -526,7 +526,7 @@ TYPED_TEST(SimdUtilsTest, loadu) {
         memset(mem + offset, 0xff, sizeof(ones));
         TypeParam a;
         simd_loadu(&a, mem + offset);
-        ASSERT_EQ(0, simd_diff(a, ones));
+        ASSERT_EQ(false, simd_diff(a, ones));
     }
 }
 
